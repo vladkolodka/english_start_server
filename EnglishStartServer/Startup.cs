@@ -1,4 +1,5 @@
-﻿using EnglishStartServer.Database;
+﻿using System;
+using EnglishStartServer.Database;
 using EnglishStartServer.Database.Models;
 using EnglishStartServer.Services;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +27,7 @@ namespace EnglishStartServer
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                     o => o.MigrationsAssembly("EnglishStartServer.Database")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
