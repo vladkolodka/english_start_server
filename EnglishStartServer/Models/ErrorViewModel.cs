@@ -1,5 +1,3 @@
-using System;
-
 namespace EnglishStartServer.Models
 {
     public class ErrorViewModel
