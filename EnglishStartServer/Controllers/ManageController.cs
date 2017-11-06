@@ -19,7 +19,7 @@ namespace EnglishStartServer.Controllers
     public class ManageController : Controller
     {
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
-        private readonly IEmailSender _emailSender;
+//        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UrlEncoder _urlEncoder;
@@ -28,13 +28,13 @@ namespace EnglishStartServer.Controllers
         public ManageController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
+//            IEmailSender emailSender,
             ILogger<ManageController> logger,
             UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+//            _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
         }
@@ -110,7 +110,7 @@ namespace EnglishStartServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+//                return View(model);
             }
 
             var user = await _userManager.GetUserAsync(User);
@@ -122,7 +122,7 @@ namespace EnglishStartServer.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
             var email = user.Email;
-            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
+//            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Index));

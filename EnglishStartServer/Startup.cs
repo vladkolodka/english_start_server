@@ -1,7 +1,7 @@
-﻿using System;
-using EnglishStartServer.Database;
+﻿using EnglishStartServer.Database;
 using EnglishStartServer.Database.Models;
 using EnglishStartServer.Services;
+using EnglishStartServer.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +32,8 @@ namespace EnglishStartServer
                 .AddDefaultTokenProviders();
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IArticleService, ArticleService>();
 
             services.AddMvc();
         }

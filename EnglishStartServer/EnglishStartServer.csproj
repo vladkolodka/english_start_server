@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EnglishStartServer.Database\EnglishStartServer.Database.csproj" />
+    <ProjectReference Include="..\EnglishStartServer.Services\EnglishStartServer.Services.csproj" />
   </ItemGroup>
 
 </Project>
