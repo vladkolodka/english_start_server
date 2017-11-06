@@ -20,6 +20,7 @@ namespace EnglishStartServer.Database
         public DbSet<Dictionary> Dictionaries { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<ApplicationUserDictionary> ApplicationUserDictionary { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,13 +30,13 @@ namespace EnglishStartServer.Database
             builder.Entity<ApplicationUserWord>().HasKey(auw => new {auw.ApplicationUserId, auw.WordId});
             builder.Entity<ApplicationUserDictionary>().HasKey(aud => new {aud.ApplicationUserId, aud.DictionaryId});
 
-            builder.Entity<ApplicationUserDictionary>().HasOne(aud => aud.Dictionary).WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<ApplicationUserWord>().HasOne(auw => auw.Word).WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
-//
-//            builder.Entity<Word>().HasOne(aud => aud.Image).WithOne()
-//                .OnDelete(DeleteBehavior.SetNull);
+            //            builder.Entity<ApplicationUserDictionary>().HasOne(aud => aud.Dictionary).WithMany()
+            //                .OnDelete(DeleteBehavior.Restrict);
+            //            builder.Entity<ApplicationUserWord>().HasOne(auw => auw.Word).WithMany()
+            //                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Word>().HasOne(aud => aud.Image).WithOne()
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
         #region Article information blocks

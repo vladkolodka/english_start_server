@@ -10,5 +10,7 @@ namespace EnglishStartServer.Database.Models
 
         [Required]
         public string Name { get; set; }
+
+        public List<Dictionary> Dictionaries { get; set; }
     }
 }

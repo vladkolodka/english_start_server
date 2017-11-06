@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EnglishStartServer.Database.Models
@@ -19,5 +20,8 @@ namespace EnglishStartServer.Database.Models
 
         public Guid? ImageId { get; set; }
         public File Image { get; set; }
+
+        public List<ApplicationUserWord> UserWords { get; set; }
+
     }
 }

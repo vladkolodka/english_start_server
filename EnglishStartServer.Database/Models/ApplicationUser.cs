@@ -6,7 +6,9 @@ namespace EnglishStartServer.Database.Models
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
-        public List<Course> Courses { get; set; }
+        public List<ApplicationUserCourse> UserCourses { get; set; }
+        public List<ApplicationUserDictionary> UserDictionaries { get; set; }
+        public List<ApplicationUserWord> UserWords { get; set; }
         public List<File> Files { get; set; }
     }
 }

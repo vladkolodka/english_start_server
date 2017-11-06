@@ -21,10 +21,7 @@ namespace EnglishStartServer.Database.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DateCreated { get; set; }
 
-//        [Required]
-//        public Guid OwnerId { get; set; }
-//        public ApplicationUser Owner { get; set; }
-
         public List<Article> Articles { get; set; }
+        public List<ApplicationUserCourse> UserCourses { get; set; }
     }
 }
