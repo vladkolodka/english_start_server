@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EnglishStartServer.Database\EnglishStartServer.Database.csproj" />
+    <ProjectReference Include="..\EnglishStartServer.Dto\EnglishStartServer.Dto.csproj" />
   </ItemGroup>
 
 </Project>
