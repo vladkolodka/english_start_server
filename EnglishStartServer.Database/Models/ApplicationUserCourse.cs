@@ -12,6 +12,7 @@ namespace EnglishStartServer.Database.Models
         public Course Course { get; set; }
 
         public bool IsStudied { get; set; } = false;
+
         [Required]
         public bool IsOwner { get; set; } = false;
     }

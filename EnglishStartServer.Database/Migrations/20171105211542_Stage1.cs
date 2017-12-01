@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EnglishStartServer.Database.Migrations
 {
@@ -9,335 +8,332 @@ namespace EnglishStartServer.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
+                "Courses",
+                table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DiffictlyLevel = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    ApplicationUserId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                    DateCreated = table.Column<DateTime>("datetime2", nullable: false),
+                    Description = table.Column<string>("nvarchar(max)", nullable: false),
+                    DiffictlyLevel = table.Column<int>("int", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_Courses_AspNetUsers_ApplicationUserId",
+                        x => x.ApplicationUserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Files",
-                columns: table => new
+                "Files",
+                table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    ContentType = table.Column<string>("nvarchar(max)", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: false),
+                    OwnerId = table.Column<Guid>("uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Files_AspNetUsers_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_Files_AspNetUsers_OwnerId",
+                        x => x.OwnerId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Languages",
-                columns: table => new
+                "Languages",
+                table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_Languages", x => x.Id); });
+
+            migrationBuilder.CreateTable(
+                "ApplicationUserCourses",
+                table => new
+                {
+                    ApplicationUserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    CourseId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    IsOwner = table.Column<bool>("bit", nullable: false),
+                    IsStudied = table.Column<bool>("bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Languages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ApplicationUserCourses",
-                columns: table => new
-                {
-                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsOwner = table.Column<bool>(type: "bit", nullable: false),
-                    IsStudied = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUserCourses", x => new { x.ApplicationUserId, x.CourseId });
+                    table.PrimaryKey("PK_ApplicationUserCourses", x => new {x.ApplicationUserId, x.CourseId});
                     table.ForeignKey(
-                        name: "FK_ApplicationUserCourses_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_ApplicationUserCourses_AspNetUsers_ApplicationUserId",
+                        x => x.ApplicationUserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserCourses_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
+                        "FK_ApplicationUserCourses_Courses_CourseId",
+                        x => x.CourseId,
+                        "Courses",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
+                "Articles",
+                table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    CourseId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    DateCreated = table.Column<DateTime>("datetime2", nullable: false),
+                    Description = table.Column<string>("nvarchar(max)", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Articles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Articles_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
+                        "FK_Articles_Courses_CourseId",
+                        x => x.CourseId,
+                        "Courses",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dictionaries",
-                columns: table => new
+                "Dictionaries",
+                table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsPublic = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SourceLanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    DateCreated = table.Column<DateTime>("datetime2", nullable: false),
+                    ImageId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    IsPublic = table.Column<bool>("bit", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: false),
+                    SourceLanguageId = table.Column<Guid>("uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dictionaries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dictionaries_Files_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Files",
-                        principalColumn: "Id",
+                        "FK_Dictionaries_Files_ImageId",
+                        x => x.ImageId,
+                        "Files",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Dictionaries_Languages_SourceLanguageId",
-                        column: x => x.SourceLanguageId,
-                        principalTable: "Languages",
-                        principalColumn: "Id",
+                        "FK_Dictionaries_Languages_SourceLanguageId",
+                        x => x.SourceLanguageId,
+                        "Languages",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "InformationBlock",
-                columns: table => new
+                "InformationBlock",
+                table => new
                 {
-                    FileId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BlockType = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SequentialNumber = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FileId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    ArticleId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    BlockType = table.Column<int>("int", nullable: false),
+                    Discriminator = table.Column<string>("nvarchar(max)", nullable: false),
+                    SequentialNumber = table.Column<int>("int", nullable: false),
+                    Text = table.Column<string>("nvarchar(max)", nullable: true),
+                    Url = table.Column<string>("nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InformationBlock", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InformationBlock_Files_FileId",
-                        column: x => x.FileId,
-                        principalTable: "Files",
-                        principalColumn: "Id",
+                        "FK_InformationBlock_Files_FileId",
+                        x => x.FileId,
+                        "Files",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_InformationBlock_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id",
+                        "FK_InformationBlock_Articles_ArticleId",
+                        x => x.ArticleId,
+                        "Articles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserDictionary",
-                columns: table => new
+                "ApplicationUserDictionary",
+                table => new
                 {
-                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DictionaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsArchived = table.Column<bool>(type: "bit", nullable: false),
-                    IsOwner = table.Column<bool>(type: "bit", nullable: false),
-                    IsStudied = table.Column<bool>(type: "bit", nullable: false)
+                    ApplicationUserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    DictionaryId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    IsArchived = table.Column<bool>("bit", nullable: false),
+                    IsOwner = table.Column<bool>("bit", nullable: false),
+                    IsStudied = table.Column<bool>("bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserDictionary", x => new { x.ApplicationUserId, x.DictionaryId });
+                    table.PrimaryKey("PK_ApplicationUserDictionary", x => new {x.ApplicationUserId, x.DictionaryId});
                     table.ForeignKey(
-                        name: "FK_ApplicationUserDictionary_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_ApplicationUserDictionary_AspNetUsers_ApplicationUserId",
+                        x => x.ApplicationUserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
-                        column: x => x.DictionaryId,
-                        principalTable: "Dictionaries",
-                        principalColumn: "Id",
+                        "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
+                        x => x.DictionaryId,
+                        "Dictionaries",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Words",
-                columns: table => new
+                "Words",
+                table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DictionaryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Original = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Translation = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    DictionaryId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    ImageId = table.Column<Guid>("uniqueidentifier", nullable: true),
+                    Original = table.Column<string>("nvarchar(max)", nullable: false),
+                    Translation = table.Column<string>("nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Words", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Words_Dictionaries_DictionaryId",
-                        column: x => x.DictionaryId,
-                        principalTable: "Dictionaries",
-                        principalColumn: "Id",
+                        "FK_Words_Dictionaries_DictionaryId",
+                        x => x.DictionaryId,
+                        "Dictionaries",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Words_Files_ImageId",
-                        column: x => x.ImageId,
-                        principalTable: "Files",
-                        principalColumn: "Id",
+                        "FK_Words_Files_ImageId",
+                        x => x.ImageId,
+                        "Files",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserWords",
-                columns: table => new
+                "ApplicationUserWords",
+                table => new
                 {
-                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Stage = table.Column<int>(type: "int", nullable: false)
+                    ApplicationUserId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    WordId = table.Column<Guid>("uniqueidentifier", nullable: false),
+                    Stage = table.Column<int>("int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserWords", x => new { x.ApplicationUserId, x.WordId });
+                    table.PrimaryKey("PK_ApplicationUserWords", x => new {x.ApplicationUserId, x.WordId});
                     table.ForeignKey(
-                        name: "FK_ApplicationUserWords_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_ApplicationUserWords_AspNetUsers_ApplicationUserId",
+                        x => x.ApplicationUserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserWords_Words_WordId",
-                        column: x => x.WordId,
-                        principalTable: "Words",
-                        principalColumn: "Id",
+                        "FK_ApplicationUserWords_Words_WordId",
+                        x => x.WordId,
+                        "Words",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserCourses_CourseId",
-                table: "ApplicationUserCourses",
-                column: "CourseId");
+                "IX_ApplicationUserCourses_CourseId",
+                "ApplicationUserCourses",
+                "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserDictionary_DictionaryId",
-                table: "ApplicationUserDictionary",
-                column: "DictionaryId");
+                "IX_ApplicationUserDictionary_DictionaryId",
+                "ApplicationUserDictionary",
+                "DictionaryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserWords_WordId",
-                table: "ApplicationUserWords",
-                column: "WordId");
+                "IX_ApplicationUserWords_WordId",
+                "ApplicationUserWords",
+                "WordId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Articles_CourseId",
-                table: "Articles",
-                column: "CourseId");
+                "IX_Articles_CourseId",
+                "Articles",
+                "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_ApplicationUserId",
-                table: "Courses",
-                column: "ApplicationUserId");
+                "IX_Courses_ApplicationUserId",
+                "Courses",
+                "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dictionaries_ImageId",
-                table: "Dictionaries",
-                column: "ImageId");
+                "IX_Dictionaries_ImageId",
+                "Dictionaries",
+                "ImageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dictionaries_SourceLanguageId",
-                table: "Dictionaries",
-                column: "SourceLanguageId");
+                "IX_Dictionaries_SourceLanguageId",
+                "Dictionaries",
+                "SourceLanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Files_OwnerId",
-                table: "Files",
-                column: "OwnerId");
+                "IX_Files_OwnerId",
+                "Files",
+                "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InformationBlock_FileId",
-                table: "InformationBlock",
-                column: "FileId");
+                "IX_InformationBlock_FileId",
+                "InformationBlock",
+                "FileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InformationBlock_ArticleId",
-                table: "InformationBlock",
-                column: "ArticleId");
+                "IX_InformationBlock_ArticleId",
+                "InformationBlock",
+                "ArticleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Words_DictionaryId",
-                table: "Words",
-                column: "DictionaryId");
+                "IX_Words_DictionaryId",
+                "Words",
+                "DictionaryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Words_ImageId",
-                table: "Words",
-                column: "ImageId");
+                "IX_Words_ImageId",
+                "Words",
+                "ImageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ApplicationUserCourses");
+                "ApplicationUserCourses");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUserDictionary");
+                "ApplicationUserDictionary");
 
             migrationBuilder.DropTable(
-                name: "ApplicationUserWords");
+                "ApplicationUserWords");
 
             migrationBuilder.DropTable(
-                name: "InformationBlock");
+                "InformationBlock");
 
             migrationBuilder.DropTable(
-                name: "Words");
+                "Words");
 
             migrationBuilder.DropTable(
-                name: "Articles");
+                "Articles");
 
             migrationBuilder.DropTable(
-                name: "Dictionaries");
+                "Dictionaries");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                "Courses");
 
             migrationBuilder.DropTable(
-                name: "Files");
+                "Files");
 
             migrationBuilder.DropTable(
-                name: "Languages");
+                "Languages");
         }
     }
 }

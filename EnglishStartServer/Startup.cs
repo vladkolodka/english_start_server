@@ -31,9 +31,11 @@ namespace EnglishStartServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
+            // Application services.
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<IWordService, WordService>();
 
             services.AddMvc();
         }
@@ -59,8 +61,8 @@ namespace EnglishStartServer
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

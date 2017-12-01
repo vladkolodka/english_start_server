@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using EnglishStartServer.Database.Models;
 
 namespace EnglishStartServer.Dto
 {
@@ -16,5 +13,7 @@ namespace EnglishStartServer.Dto
         public Guid DictionaryId { get; set; }
 
         public string ImageUrl { get; set; }
+
+        public int Stage { get; set; }
     }
 }

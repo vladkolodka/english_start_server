@@ -12,6 +12,7 @@ namespace EnglishStartServer.Database.Models
 
         public bool IsArchived { get; set; } = false;
         public bool IsStudied { get; set; } = false;
+
         [Required]
         public bool IsOwner { get; set; } = false;
     }

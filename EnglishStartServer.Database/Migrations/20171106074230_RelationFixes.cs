@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EnglishStartServer.Database.Migrations
 {
@@ -9,57 +8,57 @@ namespace EnglishStartServer.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
-                table: "ApplicationUserDictionary");
+                "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
+                "ApplicationUserDictionary");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ApplicationUserWords_Words_WordId",
-                table: "ApplicationUserWords");
+                "FK_ApplicationUserWords_Words_WordId",
+                "ApplicationUserWords");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Courses_AspNetUsers_ApplicationUserId",
-                table: "Courses");
+                "FK_Courses_AspNetUsers_ApplicationUserId",
+                "Courses");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Dictionaries_Files_ImageId",
-                table: "Dictionaries");
+                "FK_Dictionaries_Files_ImageId",
+                "Dictionaries");
 
             migrationBuilder.DropIndex(
-                name: "IX_Courses_ApplicationUserId",
-                table: "Courses");
+                "IX_Courses_ApplicationUserId",
+                "Courses");
 
             migrationBuilder.DropColumn(
-                name: "ApplicationUserId",
-                table: "Courses");
+                "ApplicationUserId",
+                "Courses");
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "ImageId",
-                table: "Dictionaries",
-                type: "uniqueidentifier",
+                "ImageId",
+                "Dictionaries",
+                "uniqueidentifier",
                 nullable: true,
                 oldClrType: typeof(Guid));
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
-                table: "ApplicationUserDictionary",
-                column: "DictionaryId",
-                principalTable: "Dictionaries",
+                "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
+                "ApplicationUserDictionary",
+                "DictionaryId",
+                "Dictionaries",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ApplicationUserWords_Words_WordId",
-                table: "ApplicationUserWords",
-                column: "WordId",
-                principalTable: "Words",
+                "FK_ApplicationUserWords_Words_WordId",
+                "ApplicationUserWords",
+                "WordId",
+                "Words",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Dictionaries_Files_ImageId",
-                table: "Dictionaries",
-                column: "ImageId",
-                principalTable: "Files",
+                "FK_Dictionaries_Files_ImageId",
+                "Dictionaries",
+                "ImageId",
+                "Files",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -67,64 +66,64 @@ namespace EnglishStartServer.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
-                table: "ApplicationUserDictionary");
+                "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
+                "ApplicationUserDictionary");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ApplicationUserWords_Words_WordId",
-                table: "ApplicationUserWords");
+                "FK_ApplicationUserWords_Words_WordId",
+                "ApplicationUserWords");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Dictionaries_Files_ImageId",
-                table: "Dictionaries");
+                "FK_Dictionaries_Files_ImageId",
+                "Dictionaries");
 
             migrationBuilder.AlterColumn<Guid>(
-                name: "ImageId",
-                table: "Dictionaries",
+                "ImageId",
+                "Dictionaries",
                 nullable: false,
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier",
                 oldNullable: true);
 
             migrationBuilder.AddColumn<Guid>(
-                name: "ApplicationUserId",
-                table: "Courses",
+                "ApplicationUserId",
+                "Courses",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_ApplicationUserId",
-                table: "Courses",
-                column: "ApplicationUserId");
+                "IX_Courses_ApplicationUserId",
+                "Courses",
+                "ApplicationUserId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
-                table: "ApplicationUserDictionary",
-                column: "DictionaryId",
-                principalTable: "Dictionaries",
+                "FK_ApplicationUserDictionary_Dictionaries_DictionaryId",
+                "ApplicationUserDictionary",
+                "DictionaryId",
+                "Dictionaries",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ApplicationUserWords_Words_WordId",
-                table: "ApplicationUserWords",
-                column: "WordId",
-                principalTable: "Words",
+                "FK_ApplicationUserWords_Words_WordId",
+                "ApplicationUserWords",
+                "WordId",
+                "Words",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Courses_AspNetUsers_ApplicationUserId",
-                table: "Courses",
-                column: "ApplicationUserId",
-                principalTable: "AspNetUsers",
+                "FK_Courses_AspNetUsers_ApplicationUserId",
+                "Courses",
+                "ApplicationUserId",
+                "AspNetUsers",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Dictionaries_Files_ImageId",
-                table: "Dictionaries",
-                column: "ImageId",
-                principalTable: "Files",
+                "FK_Dictionaries_Files_ImageId",
+                "Dictionaries",
+                "ImageId",
+                "Files",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

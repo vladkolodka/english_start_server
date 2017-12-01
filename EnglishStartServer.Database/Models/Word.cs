@@ -16,12 +16,12 @@ namespace EnglishStartServer.Database.Models
 
         [Required]
         public Guid DictionaryId { get; set; }
+
         public Dictionary Dictionary { get; set; }
 
         public Guid? ImageId { get; set; }
         public File Image { get; set; }
 
         public List<ApplicationUserWord> UserWords { get; set; }
-
     }
 }

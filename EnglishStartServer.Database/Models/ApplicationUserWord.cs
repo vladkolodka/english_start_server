@@ -8,7 +8,6 @@ namespace EnglishStartServer.Database.Models
         public ApplicationUser ApplicationUser { get; set; }
         public Guid WordId { get; set; }
         public Word Word { get; set; }
-
         public int Stage { get; set; } = 0;
     }
 }

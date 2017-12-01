@@ -18,7 +18,7 @@ namespace EnglishStartServer.Services
         public async Task<List<Article>> GetArticlesByCourse(Guid userId, Guid courseId, int padding, int count)
         {
             return await Db.Articles
-                .Where(article => article.CourseId.Equals(userId))/* .OrderBy(article => article.Name)*/.Skip(padding)
+                .Where(article => article.CourseId.Equals(userId)) /* .OrderBy(article => article.Name)*/.Skip(padding)
                 .Take(count).ToListAsync();
         }
     }

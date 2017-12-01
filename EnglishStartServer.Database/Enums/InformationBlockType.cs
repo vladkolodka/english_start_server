@@ -2,6 +2,8 @@
 {
     public enum InformationBlockType
     {
-        Text, Image, Video
+        Text,
+        Image,
+        Video
     }
 }

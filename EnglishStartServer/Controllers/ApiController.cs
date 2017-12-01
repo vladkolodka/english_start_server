@@ -18,7 +18,9 @@ namespace EnglishStartServer.Controllers
         {
             return Json(new
             {
-                data, message, code    
+                data,
+                message,
+                code
             });
         }
     }
