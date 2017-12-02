@@ -65,10 +65,23 @@ namespace EnglishStartServer.Dto
         {
             return words.Select(w => w.ToDto(stages[w.Id])).ToList();
         }
+        public static List<WordModel> ToDto(this IEnumerable<Word> words, int stage)
+        {
+            return words.Select(w => w.ToDto(stage)).ToList();
+        }
 
         public static List<Word> ToEntity(this IEnumerable<WordModel> words)
         {
             return words.Select(w => w.ToEntity()).ToList();
+        }
+
+        public static UserModel ToDto(this ApplicationUser u)
+        {
+            return new UserModel
+            {
+                Id = u.Id,
+                Login = u.UserName
+            };
         }
     }
 }

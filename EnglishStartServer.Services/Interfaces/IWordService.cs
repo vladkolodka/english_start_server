@@ -9,5 +9,6 @@ namespace EnglishStartServer.Services.Interfaces
     {
         Task<bool> SetWordsStage(Guid userId, IDictionary<Guid, int> wordChanges);
         Task<List<WordModel>> GetDictionaryWords(Guid userId, Guid dictionaryId);
+        Task<List<WordModel>> GetUserWordsWithStage(Guid userId, Guid dictionaryId, int stage, int count);
     }
 }

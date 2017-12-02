@@ -68,5 +68,17 @@ namespace EnglishStartServer.Services
 
             return words.ToDto(userWords);
         }
+
+        public async Task<List<WordModel>> GetUserWordsWithStage(Guid userId, Guid dictionaryId, int stage, int count)
+        {
+            var ignoredIds = await Db.ApplicationUserWords
+                .Where(aw => aw.ApplicationUserId == userId && aw.Stage != stage)
+                .Select(aw => aw.WordId).ToListAsync();
+
+            return (await Db.Words.Where(w => w.DictionaryId == dictionaryId && !ignoredIds.Contains(w.Id))
+                    .OrderBy(w => w.Original).Take(count)
+                    .ToListAsync())
+                .ToDto(stage);
+        }
     }
 }

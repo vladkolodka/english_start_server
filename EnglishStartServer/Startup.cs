@@ -1,9 +1,11 @@
-﻿using EnglishStartServer.Database;
+﻿using System.Threading.Tasks;
+using EnglishStartServer.Database;
 using EnglishStartServer.Database.Models;
 using EnglishStartServer.Services;
 using EnglishStartServer.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +32,19 @@ namespace EnglishStartServer
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = async context =>
+                {
+                    if (context.Request.Path.StartsWithSegments("/api"))
+                    {
+                        context.Response.StatusCode = 403;
+                        await context.Response.WriteAsync("Forbidden");
+                    }
+                    else context.Response.Redirect(context.RedirectUri);
+                };
+            });
 
             // Application services.
             services.AddScoped<ICourseService, CourseService>();

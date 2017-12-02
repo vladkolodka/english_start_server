@@ -82,5 +82,31 @@ namespace EnglishStartServer.Services
             await Db.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> ArchiveDictionary(Guid userId, Guid dictionaryId, bool archived = true)
+        {
+            var userDictionary = await
+                Db.ApplicationUserDictionary.FirstOrDefaultAsync(ud => ud.DictionaryId == dictionaryId &&
+                                                                       ud.ApplicationUserId == userId);
+            if (userDictionary == null) return false;
+
+            userDictionary.IsArchived = archived;
+
+            return true;
+        }
+
+        public async Task<bool> SetDictionaryLearnStatus(Guid userId, Guid dictionaryId, bool status)
+        {
+            var userDictionary = await
+                Db.ApplicationUserCourses.FirstOrDefaultAsync(ad =>
+                    ad.ApplicationUserId == userId && ad.CourseId == dictionaryId);
+
+            if (userDictionary == null) return false;
+
+            userDictionary.IsStudied = status;
+
+            await Db.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishStartServer.Controllers
 {
-    [Route("[controller]/[action]/{data?}")]
+    [Authorize]
+    [Route("api/[controller]/[action]/{data?}")]
     public class ApiController : Controller
     {
         protected Guid GetUserId()

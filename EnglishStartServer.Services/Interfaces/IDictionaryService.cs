@@ -11,5 +11,7 @@ namespace EnglishStartServer.Services.Interfaces
         Task<List<WordModel>> AddWordsToDictionary(Guid userId, Guid dictionaryId, List<WordModel> words);
         Task<DictionaryModel> CreateDictionary(Guid userId, DictionaryModel dictionaryModel);
         Task<bool> AssignDictionary(Guid userId, Guid dictionaryId);
+        Task<bool> ArchiveDictionary(Guid userId, Guid dictionaryId, bool archived = true);
+        Task<bool> SetDictionaryLearnStatus(Guid userId, Guid dictionaryId, bool status);
     }
 }
