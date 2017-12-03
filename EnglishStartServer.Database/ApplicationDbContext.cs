@@ -30,6 +30,8 @@ namespace EnglishStartServer.Database
             builder.Entity<ApplicationUserWord>().HasKey(auw => new {auw.ApplicationUserId, auw.WordId});
             builder.Entity<ApplicationUserDictionary>().HasKey(aud => new {aud.ApplicationUserId, aud.DictionaryId});
 
+            builder.Entity<Dictionary>().Property(d => d.DateCreated).HasDefaultValueSql("GETDATE()");
+
             //            builder.Entity<ApplicationUserDictionary>().HasOne(aud => aud.Dictionary).WithMany()
             //                .OnDelete(DeleteBehavior.Restrict);
             //            builder.Entity<ApplicationUserWord>().HasOne(auw => auw.Word).WithMany()

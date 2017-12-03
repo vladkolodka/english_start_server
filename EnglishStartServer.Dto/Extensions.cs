@@ -8,7 +8,7 @@ namespace EnglishStartServer.Dto
     public static class Extensions
     {
         // requires external data
-        public static DictionaryModel ToDto(this Dictionary d)
+        public static DictionaryModel ToDto(this Dictionary d, bool learningStatus)
         {
             return new DictionaryModel
             {
@@ -16,8 +16,9 @@ namespace EnglishStartServer.Dto
                 Name = d.Name,
                 DateCreated = d.DateCreated,
                 ImageUrl = d.ImageId.ToString(),
-                SourceLanguage = d.SourceLanguage?.Name
-//                Words = d.Words.ToDto()
+                SourceLanguage = d.SourceLanguage?.Name,
+                IsPublic = d.IsPublic,
+                LearningStatus = learningStatus
             };
         }
 
@@ -27,9 +28,9 @@ namespace EnglishStartServer.Dto
             return new Dictionary
             {
                 Name = d.Name,
-                DateCreated = d.DateCreated,
                 SourceLanguage = sourceLanguage,
-                Words = d.Words.ToEntity()
+                Words = d.Words.ToEntity(),
+                IsPublic = d.IsPublic
             };
         }
 
@@ -56,15 +57,11 @@ namespace EnglishStartServer.Dto
             };
         }
 
-        public static List<DictionaryModel> ToDto(this IEnumerable<Dictionary> dictionaries)
-        {
-            return dictionaries.Select(d => d.ToDto()).ToList();
-        }
-
         public static List<WordModel> ToDto(this IEnumerable<Word> words, Dictionary<Guid, int> stages)
         {
             return words.Select(w => w.ToDto(stages[w.Id])).ToList();
         }
+
         public static List<WordModel> ToDto(this IEnumerable<Word> words, int stage)
         {
             return words.Select(w => w.ToDto(stage)).ToList();

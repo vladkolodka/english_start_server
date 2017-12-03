@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EnglishStartServer.Database.Models
 {
@@ -14,7 +13,6 @@ namespace EnglishStartServer.Database.Models
 
         public bool IsPublic { get; set; } = false;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DateCreated { get; set; }
 
         public Guid? ImageId { get; set; }
@@ -23,7 +21,7 @@ namespace EnglishStartServer.Database.Models
         public Guid SourceLanguageId { get; set; }
         public Language SourceLanguage { get; set; }
 
-        public List<Word> Words { get; set; }
-        public List<ApplicationUserDictionary> UserDictionaries { get; set; }
+        public List<Word> Words { get; set; } = new List<Word>();
+        public List<ApplicationUserDictionary> UserDictionaries { get; set; } = new List<ApplicationUserDictionary>();
     }
 }

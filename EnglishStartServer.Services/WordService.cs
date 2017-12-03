@@ -26,7 +26,7 @@ namespace EnglishStartServer.Services
             var dictionaryId = words[0].DictionaryId;
 
             // check if all words from one dictionary
-            if (words.All(w => w.DictionaryId == dictionaryId)) return false;
+            if (words.Any(w => w.DictionaryId != dictionaryId)) return false;
 
             var userDictionary = Db.ApplicationUserDictionary.FirstOrDefaultAsync(d =>
                 d.DictionaryId == dictionaryId && d.ApplicationUserId == userId);
@@ -37,17 +37,20 @@ namespace EnglishStartServer.Services
             var userWords = await Db.ApplicationUserWords.Where(aw => aw.ApplicationUserId == userId &&
                                                                       wordChanges.ContainsKey(aw.WordId)).ToListAsync();
 
-            userWords.AddRange(wordChanges.Select(pair => pair.Key).Except(userWords.Select(aw => aw.WordId))
+            var missing = wordChanges.Select(pair => pair.Key).Except(userWords.Select(aw => aw.WordId))
                 .Select(wordId => new ApplicationUserWord
                 {
                     WordId = wordId,
                     ApplicationUserId = userId
-                }));
+                }).ToList();
+
+            Db.ApplicationUserWords.AddRange(missing);
+            userWords.AddRange(missing);
 
             userWords.ForEach(w =>
             {
-                if (wordChanges[w.WordId] > 0) w.Stage++;
-                else w.Stage--;
+                if (wordChanges[w.WordId] > 0 && w.Stage != 3) w.Stage++;
+                else if (wordChanges[w.WordId] < 0 && w.Stage != 0) w.Stage--;
             });
 
             await Db.SaveChangesAsync();
@@ -69,16 +72,16 @@ namespace EnglishStartServer.Services
             return words.ToDto(userWords);
         }
 
-        public async Task<List<WordModel>> GetUserWordsWithStage(Guid userId, Guid dictionaryId, int stage, int count)
+        public async Task<List<WordModel>> GetNotLearedWords(Guid userId, Guid dictionaryId, int count)
         {
             var ignoredIds = await Db.ApplicationUserWords
-                .Where(aw => aw.ApplicationUserId == userId && aw.Stage != stage)
+                .Where(aw => aw.ApplicationUserId == userId && aw.Stage == 3)
                 .Select(aw => aw.WordId).ToListAsync();
 
             return (await Db.Words.Where(w => w.DictionaryId == dictionaryId && !ignoredIds.Contains(w.Id))
-                    .OrderBy(w => w.Original).Take(count)
+                    .OrderBy(w => Guid.NewGuid()).Take(count)
                     .ToListAsync())
-                .ToDto(stage);
+                .ToDto(0);
         }
     }
 }

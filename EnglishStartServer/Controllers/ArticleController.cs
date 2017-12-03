@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishStartServer.Controllers
 {
-    public class ArticlesController : ApiController
+    public class ArticleController : ApiController
     {
         private readonly IArticleService _articleService;
 
-        public ArticlesController(IArticleService articleService)
+        public ArticleController(IArticleService articleService)
         {
             _articleService = articleService;
         }

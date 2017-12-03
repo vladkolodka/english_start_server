@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 namespace EnglishStartServer.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    internal class ApplicationDbContextModelSnapshot : ModelSnapshot
+    class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -193,7 +193,8 @@ namespace EnglishStartServer.Database.Migrations
                     .ValueGeneratedOnAdd();
 
                 b.Property<DateTime>("DateCreated")
-                    .ValueGeneratedOnAdd();
+                    .ValueGeneratedOnAdd()
+                    .HasDefaultValueSql("GETDATE()");
 
                 b.Property<Guid?>("ImageId");
 
@@ -288,7 +289,9 @@ namespace EnglishStartServer.Database.Migrations
 
                 b.HasIndex("DictionaryId");
 
-                b.HasIndex("ImageId");
+                b.HasIndex("ImageId")
+                    .IsUnique()
+                    .HasFilter("[ImageId] IS NOT NULL");
 
                 b.ToTable("Words");
             });
@@ -494,8 +497,9 @@ namespace EnglishStartServer.Database.Migrations
                     .OnDelete(DeleteBehavior.Cascade);
 
                 b.HasOne("EnglishStartServer.Database.Models.File", "Image")
-                    .WithMany()
-                    .HasForeignKey("ImageId");
+                    .WithOne()
+                    .HasForeignKey("EnglishStartServer.Database.Models.Word", "ImageId")
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
