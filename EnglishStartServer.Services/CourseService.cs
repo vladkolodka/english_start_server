@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EnglishStartServer.Database;
 using EnglishStartServer.Database.Models;
+using EnglishStartServer.Dto;
 using EnglishStartServer.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,6 +61,22 @@ namespace EnglishStartServer.Services
 
             await Db.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<CourseModel> CreateCourse(Guid userId, CourseModel courseModel)
+        {
+            var course = courseModel.ToEntity();
+
+            course.UserCourses.Add(new ApplicationUserCourse
+            {
+                IsOwner = true,
+                ApplicationUserId = userId
+            });
+
+            await Db.Courses.AddAsync(course);
+            await Db.SaveChangesAsync();
+
+            return course.ToDto();
         }
     }
 }

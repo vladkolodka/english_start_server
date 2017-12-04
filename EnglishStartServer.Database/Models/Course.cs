@@ -18,10 +18,9 @@ namespace EnglishStartServer.Database.Models
         [Required]
         public int DiffictlyLevel { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DateCreated { get; set; }
 
         public List<Article> Articles { get; set; }
-        public List<ApplicationUserCourse> UserCourses { get; set; }
+        public List<ApplicationUserCourse> UserCourses { get; set; } = new List<ApplicationUserCourse>();
     }
 }

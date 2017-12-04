@@ -9,7 +9,7 @@ namespace EnglishStartServer.Database.Models
         public Guid Id { get; set; }
 
         [Required]
-        public InformationBlockType BlockType { get; set; }
+        public virtual InformationBlockType BlockType { get; set; }
 
         public int SequentialNumber { get; set; } = 0;
 

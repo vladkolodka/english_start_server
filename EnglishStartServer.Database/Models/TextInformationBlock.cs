@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using EnglishStartServer.Database.Enums;
 
 namespace EnglishStartServer.Database.Models
 {
@@ -6,5 +7,7 @@ namespace EnglishStartServer.Database.Models
     {
         [Required]
         public string Text { get; set; }
+
+        public override InformationBlockType BlockType { get; set; } = InformationBlockType.Text;
     }
 }

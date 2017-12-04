@@ -19,9 +19,8 @@ namespace EnglishStartServer.Database.Models
 
         public Course Course { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime DateCreated { get; set; }
 
-        public List<InformationBlock> InformationBlocks { get; set; }
+        public List<InformationBlock> InformationBlocks { get; set; } = new List<InformationBlock>();
     }
 }

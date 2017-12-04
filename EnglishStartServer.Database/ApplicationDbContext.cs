@@ -31,6 +31,8 @@ namespace EnglishStartServer.Database
             builder.Entity<ApplicationUserDictionary>().HasKey(aud => new {aud.ApplicationUserId, aud.DictionaryId});
 
             builder.Entity<Dictionary>().Property(d => d.DateCreated).HasDefaultValueSql("GETDATE()");
+            builder.Entity<Course>().Property(d => d.DateCreated).HasDefaultValueSql("GETDATE()");
+            builder.Entity<Article>().Property(d => d.DateCreated).HasDefaultValueSql("GETDATE()");
 
             //            builder.Entity<ApplicationUserDictionary>().HasOne(aud => aud.Dictionary).WithMany()
             //                .OnDelete(DeleteBehavior.Restrict);
