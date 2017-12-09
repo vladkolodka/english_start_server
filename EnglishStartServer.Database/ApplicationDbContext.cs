@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnglishStartServer.Database
 {
+    // TODO add constraints
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public ApplicationDbContext(DbContextOptions options)

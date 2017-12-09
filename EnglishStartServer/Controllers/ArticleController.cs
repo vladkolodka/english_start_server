@@ -30,5 +30,11 @@ namespace EnglishStartServer.Controllers
         {
             return Json(data: await _articleService.CreateArticle(GetUserId(), data.CourseId, data.Article));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Modify([FromBody] ArticleModel data)
+        {
+            return Json(data: await _articleService.ModifyArticle(GetUserId(), data));
+        }
     }
 }

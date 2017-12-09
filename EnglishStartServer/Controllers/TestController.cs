@@ -61,7 +61,7 @@ namespace EnglishStartServer.Controllers
 
         public async Task<IActionResult> Test2()
         {
-            var id = Guid.Parse("53D9B0BC-F7BB-4D05-682B-08D53A838B92");
+            var id = Guid.Parse("6a14197e-a8e0-43a6-e2f7-08d53f2e2caf");
 
             var article = await _context.Articles.Include(a => a.InformationBlocks)
                 .FirstOrDefaultAsync(a => a.Id == id);

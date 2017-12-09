@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EnglishStartServer.Database.Models
 {
@@ -20,7 +19,7 @@ namespace EnglishStartServer.Database.Models
 
         public DateTime DateCreated { get; set; }
 
-        public List<Article> Articles { get; set; }
+        public List<Article> Articles { get; set; } = new List<Article>();
         public List<ApplicationUserCourse> UserCourses { get; set; } = new List<ApplicationUserCourse>();
     }
 }

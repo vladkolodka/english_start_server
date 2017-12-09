@@ -126,27 +126,37 @@ namespace EnglishStartServer.Dto
 
         public static InformationBlockModel ToDto(this InformationBlock b)
         {
+            InformationBlockModel dto;
+
             switch (b)
             {
                 case TextInformationBlock bl:
-                    return new TextInformationBlockModel
+                    dto = new TextInformationBlockModel
                     {
                         Text = bl.Text
                     };
+                    break;
 
                 case VideoInformationBlock bl:
-                    return new VideoInformationBlockModel
+                    dto = new VideoInformationBlockModel
                     {
                         Url = bl.Url
                     };
+                    break;
                 case ImageInformationBlock bl:
-                    return new ImageInformationBlockModel
+                    dto = new ImageInformationBlockModel
                     {
                         Name = bl.FileId.ToString()
                     };
+                    break;
                 default:
-                    return new InformationBlockModel();
+                    dto = new InformationBlockModel();
+                    break;
             }
+
+            dto.SequentialNumber = b.SequentialNumber;
+            dto.Id = b.Id;
+            return dto;
         }
 
         public static Article ToEntity(this ArticleModel a)
@@ -159,16 +169,74 @@ namespace EnglishStartServer.Dto
             };
         }
 
-        public static List<InformationBlock> ToEntity(this List<InformationBlockModel> blocks)
+        public static List<InformationBlock> ToEntity(this IEnumerable<InformationBlockModel> blocks)
         {
             return blocks.Select(b => b.ToEntity()).ToList();
         }
 
         public static InformationBlock ToEntity(this InformationBlockModel block)
         {
+            InformationBlock model;
 
+            // TODO image block file id
+            switch (block)
+            {
+                case TextInformationBlockModel bl:
+                    model = new TextInformationBlock
+                    {
+                        Text = bl.Text
+                    };
+                    break;
 
-            return null;
+                case VideoInformationBlockModel bl:
+                    model = new VideoInformationBlock
+                    {
+                        Url = bl.Url
+                    };
+                    break;
+                case ImageInformationBlockModel _:
+                    model = new ImageInformationBlock();
+                    break;
+                default:
+                    model = new InformationBlock();
+                    break;
+            }
+
+            model.SequentialNumber = block.SequentialNumber;
+            return model;
+        }
+
+        public static void Update(this InformationBlock item, InformationBlockModel m)
+        {
+            switch (item)
+            {
+                case TextInformationBlock bl:
+                {
+                    var b = (TextInformationBlockModel) m;
+
+                    bl.Text = b.Text;
+
+                    break;
+                }
+                case ImageInformationBlock bl:
+                {
+                    var b = (ImageInformationBlockModel) m;
+
+                    // TODO image
+
+                    break;
+                }
+                case VideoInformationBlock bl:
+                {
+                    var b = (VideoInformationBlockModel) m;
+
+                    bl.Url = b.Url;
+
+                    break;
+                }
+            }
+
+            item.SequentialNumber = m.SequentialNumber;
         }
     }
 }

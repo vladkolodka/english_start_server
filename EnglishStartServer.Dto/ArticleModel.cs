@@ -16,6 +16,6 @@ namespace EnglishStartServer.Dto
 
         public DateTime DateCreated { get; set; }
 
-        public List<InformationBlockModel> InformationBlocks { get; set; }
+        public virtual List<InformationBlockModel> InformationBlocks { get; set; }
     }
 }

@@ -31,12 +31,61 @@ namespace EnglishStartServer.Services
             return article.ToDto(article.InformationBlocks.OrderBy(b => b.SequentialNumber));
         }
 
-        public Task<ArticleModel> CreateArticle(Guid userId, Guid courseId, ArticleModel articleModel)
+        public async Task<ArticleModel> CreateArticle(Guid userId, Guid courseId, ArticleModel articleModel)
         {
+            // TODO work with files
+            var userCourse = await Db.ApplicationUserCourses.Include(uc => uc.Course)
+                .Where(uc => uc.ApplicationUserId == userId && uc.CourseId == courseId && uc.IsOwner)
+                .SingleOrDefaultAsync();
+
+            if (userCourse == null) return null;
+
             var article = articleModel.ToEntity();
 
+            userCourse.Course.Articles.Add(article);
 
-            return null;
+            await Db.SaveChangesAsync();
+
+            return article.ToDto(article.InformationBlocks);
+        }
+
+        public async Task<ArticleModel> ModifyArticle(Guid userId, ArticleModel articleModel)
+        {
+            var article = await Db.Articles.Include(a => a.InformationBlocks)
+                .Where(a => a.Id == articleModel.Id)
+                .SingleOrDefaultAsync();
+
+            if (article == null) return null;
+
+            var userCourse = await Db.ApplicationUserCourses
+                .Where(uc => uc.ApplicationUserId == userId && uc.CourseId == article.CourseId && uc.IsOwner)
+                .SingleOrDefaultAsync();
+
+            if (userCourse == null) return null;
+
+            article.Name = articleModel.Name;
+            article.Description = articleModel.Description;
+
+            try
+            {
+                articleModel.InformationBlocks.ForEach(model =>
+                {
+                    var block =
+                        article.InformationBlocks.SingleOrDefault(b => b.Id == model.Id && b.BlockType == model.Type);
+
+                    if (block == null) throw new Exception();
+
+                    block.Update(model);
+                });
+
+                await Db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return article.ToDto(article.InformationBlocks);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using EnglishStartServer.Database;
+﻿using EnglishStartServer.Database;
 using EnglishStartServer.Database.Models;
+using EnglishStartServer.Dto.Helpers;
 using EnglishStartServer.Services;
 using EnglishStartServer.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -46,13 +46,17 @@ namespace EnglishStartServer
                 };
             });
 
+            services.AddCors(options => options.AddPolicy("AllowAll",
+                builder => builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().AllowCredentials().Build()));
+
             // Application services.
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IDictionaryService, DictionaryService>();
             services.AddScoped<IWordService, WordService>();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.Converters.Add(new InformationBlockConverter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
