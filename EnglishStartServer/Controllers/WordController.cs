@@ -25,6 +25,7 @@ namespace EnglishStartServer.Controllers
             return Json(await _service.GetNotLearedWords(GetUserId(), dictionaryId, count));
         }
 
+        [HttpPost]
         public async Task<IActionResult> SetStages([FromBody] IDictionary<Guid, int> data)
         {
             return Json(await _service.SetWordsStage(GetUserId(), data));

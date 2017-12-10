@@ -12,5 +12,8 @@ namespace EnglishStartServer.Dto
 
         public int DiffictlyLevel { get; set; }
         public DateTime DateCreated { get; set; }
+
+        public bool IsAdded { get; set; }
+        public bool IsStudied { get; set; }
     }
 }

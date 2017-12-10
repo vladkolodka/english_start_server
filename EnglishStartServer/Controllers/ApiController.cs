@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishStartServer.Controllers
 {
     [Authorize]
     [Route("api/[controller]/[action]/{data?}")]
+    [EnableCors("AllowAll")]
     public class ApiController : Controller
     {
         protected Guid GetUserId()

@@ -16,17 +16,23 @@ namespace EnglishStartServer.Services
         {
         }
 
-        public async Task<List<Course>> GetAllCourses(int offset, int padding)
+        public async Task<List<CourseModel>> GetAllCourses(Guid userId, int offset, int count)
         {
-            // TODO use DTO
-            return await Db.Courses.OrderBy(c => c.DateCreated).Skip(offset).Take(padding).ToListAsync();
+            var courses = await Db.Courses.OrderBy(c => c.DateCreated).Skip(offset).Take(count).ToListAsync();
+
+            var ids = courses.Select(c => c.Id);
+
+            var userCourses = await Db.ApplicationUserCourses.Where(uc => uc.ApplicationUserId == userId
+                                                                          && ids.Contains(uc.CourseId)
+            ).ToDictionaryAsync(ac => ac.CourseId, ac => ac.IsStudied);
+
+            return courses.ToDto(userCourses);
         }
 
-        public async Task<List<Course>> GetUserCourses(Guid userId)
+        public async Task<List<CourseModel>> GetUserCourses(Guid userId)
         {
-            // TODO information about ownership and learning status in DTO
-            return await Db.ApplicationUserCourses.Include(c => c.Course).Where(u => u.ApplicationUserId == userId)
-                .Select(u => u.Course).ToListAsync();
+            return (await Db.ApplicationUserCourses.Include(c => c.Course).Where(u => u.ApplicationUserId == userId)
+                .ToListAsync()).ToDto();
         }
 
         public async Task<bool> AssignCourse(Guid userId, Guid courseId)
@@ -76,7 +82,7 @@ namespace EnglishStartServer.Services
             await Db.Courses.AddAsync(course);
             await Db.SaveChangesAsync();
 
-            return course.ToDto();
+            return course.ToDto(false);
         }
     }
 }

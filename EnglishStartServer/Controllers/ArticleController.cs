@@ -15,9 +15,9 @@ namespace EnglishStartServer.Controllers
             _articleService = articleService;
         }
 
-        public async Task<IActionResult> Index(Guid courseId, int padding, int count)
+        public async Task<IActionResult> Index(Guid courseId, int offset, int count)
         {
-            return Json(data: await _articleService.GetArticlesByCourse(GetUserId(), courseId, padding, count));
+            return Json(data: await _articleService.GetArticlesByCourse(courseId, offset, count));
         }
 
         public async Task<IActionResult> Get(Guid data)

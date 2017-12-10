@@ -41,6 +41,12 @@ namespace EnglishStartServer.Controllers
                 : Json(406, "", "Not acceptable");
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Json<string>();
+        }
+
         [HttpGet]
         public async Task<IActionResult> WhoAmI()
         {

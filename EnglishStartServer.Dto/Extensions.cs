@@ -84,7 +84,7 @@ namespace EnglishStartServer.Dto
             };
         }
 
-        public static CourseModel ToDto(this Course c)
+        public static CourseModel ToDto(this Course c, bool? isStudied)
         {
             return new CourseModel
             {
@@ -92,8 +92,22 @@ namespace EnglishStartServer.Dto
                 Name = c.Name,
                 DateCreated = c.DateCreated,
                 Description = c.Description,
-                DiffictlyLevel = c.DiffictlyLevel
+                DiffictlyLevel = c.DiffictlyLevel,
+                IsAdded = isStudied.HasValue,
+                IsStudied = isStudied ?? false
             };
+        }
+
+        public static List<CourseModel> ToDto(this IEnumerable<Course> courses, IDictionary<Guid, bool> uc)
+        {
+            return courses.Select(c => c.ToDto(
+                uc.ContainsKey(c.Id) ? uc[c.Id] : new bool?()
+            )).ToList();
+        }
+
+        public static List<CourseModel> ToDto(this IEnumerable<ApplicationUserCourse> uc)
+        {
+            return uc.Select(c => c.Course.ToDto(c.IsStudied)).ToList();
         }
 
         public static Course ToEntity(this CourseModel c)
@@ -115,8 +129,13 @@ namespace EnglishStartServer.Dto
                 Description = a.Description,
                 DateCreated = a.DateCreated,
                 CourseId = a.CourseId,
-                InformationBlocks = infos.ToDto()
+                InformationBlocks = infos?.ToDto()
             };
+        }
+
+        public static List<ArticleModel> ToDto(this IEnumerable<Article> a)
+        {
+            return a.Select(ar => ar.ToDto(null)).ToList();
         }
 
         public static List<InformationBlockModel> ToDto(this IEnumerable<InformationBlock> infos)

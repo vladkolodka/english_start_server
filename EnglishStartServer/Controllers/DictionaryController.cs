@@ -18,38 +18,38 @@ namespace EnglishStartServer.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DictionaryModel data)
         {
-            return Json(await _service.CreateDictionary(GetUserId(), data));
+            return Json(data: await _service.CreateDictionary(GetUserId(), data));
         }
 
         public async Task<IActionResult> Add(Guid dictionaryId)
         {
-            return Json(await _service.AssignDictionary(GetUserId(), dictionaryId));
+            return Json(data: await _service.AssignDictionary(GetUserId(), dictionaryId));
         }
 
         public async Task<IActionResult> Own()
         {
-            return Json(await _service.GetUserDictionaries(GetUserId()));
+            return Json(data: await _service.GetUserDictionaries(GetUserId()));
         }
 
         public async Task<IActionResult> Search(string data)
         {
-            return Json(await _service.SearchDictionaries(data));
+            return Json(data: await _service.SearchDictionaries(data));
         }
 
         public async Task<IActionResult> SetStatus(Guid dictionaryId, bool status = true)
         {
-            return Json(await _service.SetDictionaryLearnStatus(GetUserId(), dictionaryId, status));
+            return Json(data: await _service.SetDictionaryLearnStatus(GetUserId(), dictionaryId, status));
         }
 
         public async Task<IActionResult> Archive(Guid dictionaryId, bool archived = true)
         {
-            return Json(await _service.ArchiveDictionary(GetUserId(), dictionaryId, archived));
+            return Json(data: await _service.ArchiveDictionary(GetUserId(), dictionaryId, archived));
         }
 
         [HttpPost]
         public async Task<IActionResult> AddWords([FromBody] AddWordsModel data)
         {
-            return Json(await _service.AddWordsToDictionary(GetUserId(), data.DictionaryId, data.Words));
+            return Json(data: await _service.AddWordsToDictionary(GetUserId(), data.DictionaryId, data.Words));
         }
     }
 }

@@ -16,11 +16,11 @@ namespace EnglishStartServer.Services
         {
         }
 
-        public async Task<List<Article>> GetArticlesByCourse(Guid userId, Guid courseId, int padding, int count)
+        public async Task<List<ArticleModel>> GetArticlesByCourse(Guid courseId, int padding, int count)
         {
-            return await Db.Articles
-                .Where(article => article.CourseId.Equals(userId)).OrderBy(article => article.DateCreated).Skip(padding)
-                .Take(count).ToListAsync();
+            return (await Db.Articles
+                .Where(article => article.CourseId.Equals(courseId)).OrderBy(article => article.DateCreated).Skip(padding)
+                .Take(count).ToListAsync()).ToDto();
         }
 
         public async Task<ArticleModel> GetArticle(Guid articleId)
