@@ -87,5 +87,10 @@ namespace EnglishStartServer.Services
 
             return article.ToDto(article.InformationBlocks);
         }
+
+        public async Task<List<ArticleModel>> LastArticles(int count)
+        {
+            return (await Db.Articles.FromSql("LastArticles {0}", count).ToListAsync()).ToDto();
+        }
     }
 }

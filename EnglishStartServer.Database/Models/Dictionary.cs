@@ -9,6 +9,7 @@ namespace EnglishStartServer.Database.Models
         public Guid Id { get; set; }
 
         [Required]
+        [MaxLength(20)]
         public string Name { get; set; }
 
         public bool IsPublic { get; set; } = false;

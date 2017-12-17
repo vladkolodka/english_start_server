@@ -36,5 +36,10 @@ namespace EnglishStartServer.Controllers
         {
             return Json(data: await _articleService.ModifyArticle(GetUserId(), data));
         }
+
+        public async Task<IActionResult> Latest(int count)
+        {
+            return Json(data: await _articleService.LastArticles(count));
+        }
     }
 }

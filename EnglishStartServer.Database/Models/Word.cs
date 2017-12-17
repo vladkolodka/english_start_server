@@ -9,9 +9,11 @@ namespace EnglishStartServer.Database.Models
         public Guid Id { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Original { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Translation { get; set; }
 
         [Required]

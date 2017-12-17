@@ -11,5 +11,7 @@ namespace EnglishStartServer.Services.Interfaces
         Task<ArticleModel> GetArticle(Guid articleId);
         Task<ArticleModel> CreateArticle(Guid userId, Guid courseId, ArticleModel articleModel);
         Task<ArticleModel> ModifyArticle(Guid userId, ArticleModel articleModel);
+
+        Task<List<ArticleModel>> LastArticles(int count);
     }
 }
