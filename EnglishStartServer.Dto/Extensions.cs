@@ -32,7 +32,7 @@ namespace EnglishStartServer.Dto
             {
                 Name = d.Name,
                 SourceLanguage = sourceLanguage,
-                Words = d.Words.ToEntity(),
+                Words = d.Words?.ToEntity(),
                 IsPublic = d.IsPublic
             };
         }

@@ -16,6 +16,7 @@ namespace EnglishStartServer.Database.Models
         public string Description { get; set; }
 
         [Required]
+        [Range(1, 6)]
         public int DiffictlyLevel { get; set; }
 
         public DateTime DateCreated { get; set; }

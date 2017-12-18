@@ -35,11 +35,6 @@ namespace EnglishStartServer.Database
             builder.Entity<Course>().Property(d => d.DateCreated).HasDefaultValueSql("GETDATE()");
             builder.Entity<Article>().Property(d => d.DateCreated).HasDefaultValueSql("GETDATE()");
 
-            //            builder.Entity<ApplicationUserDictionary>().HasOne(aud => aud.Dictionary).WithMany()
-            //                .OnDelete(DeleteBehavior.Restrict);
-            //            builder.Entity<ApplicationUserWord>().HasOne(auw => auw.Word).WithMany()
-            //                .OnDelete(DeleteBehavior.Restrict);
-
             builder.Entity<Word>().HasOne(aud => aud.Image).WithOne()
                 .OnDelete(DeleteBehavior.SetNull);
         }
